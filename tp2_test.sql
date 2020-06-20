@@ -117,7 +117,7 @@ create table TP2_UTILISATEUR (
     TYPE_UTI varchar2(30) default 'Utilisateur' not null,
     constraint PK_UTILISATEUR primary key (LOGIN_UTILISATEUR),
     constraint AK_COURRIEL_UTI unique (COURRIEL_UTI)
-):
+);
 
 create table TP2_CRITIQUE(
     NO_CRITIQUE number(6,0) not null,
