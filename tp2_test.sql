@@ -134,3 +134,17 @@ create table TP2_CRITIQUE(
     constraint AK_CRITIQUE unique (NO_OEUVRE, SURNOM_MEMBRE, DATE_CRI)
 );
 /*SÉPARATION*/
+alter table TP2_HORAIRE_PLATEFORME
+    add (constraint FK_PLA_NOM_PLATEFORME foreign key (NOM_PLATEFORME) references TP2_PLATEFORME(NOM_PLATEFORME),
+    constraint FK_PLA_NO_OEUVRE foreign key (NO_OEUVRE) references TP2_OEUVRE(NO_OEUVRE));
+    
+alter table TP2_HORAIRE_CHAINE
+    add (constraint FK_PLA_NOM_CHAINE foreign key (NOM_CHAINE) references TP2_CHAINE(NOM_CHAINE),
+    constraint FK_CHA_NO_OEUVRE foreign key (NO_OEUVRE) references TP2_OEUVRE(NO_OEUVRE));
+    
+alter table TP2_HORAIRE_CINEMA
+    add (constraint FK_HC_NOM_CINEMA foreign key (NOM_CINEMA) references TP2_CINEMA(NOM_CINEMA),
+    constraint FK_HC_NO_OEUVRE foreign key (NO_OEUVRE) references TP2_OEUVRE(NO_OEUVRE));
+    
+alter table TP2_BILLET_CINEMA
+    add constraint FK_BIL_NOM_CINEMA foreign key (NOM_CINEMA) references TP2_CINEMA(NOM_CINEMA);
