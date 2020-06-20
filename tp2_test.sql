@@ -12,6 +12,7 @@ drop table TP2_ROLE_OEUVRE cascade constraints;
 drop table TP2_ACTEUR cascade constraints;
 drop table TP2_UTILISATEUR cascade constraints;
 drop table TP2_CRITIQUE cascade constraints;
+drop sequence NO_CRITIQUE_SEQ ; 
 
 create table TP2_PLATEFORME(
     NOM_PLATEFORME varchar2(40) not null,
@@ -159,3 +160,6 @@ create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COUR
         from TP2_UTILISATEUR
             where TYPE_UTI = 'Employé';
     
+create sequence NO_CRITIQUE_SEQ
+    start with 5 
+    increment by 5 ;
