@@ -301,3 +301,4 @@ select NOM_CHAINE
             select NOM_PLATEFORME
                 from TP2_PLATEFORME
                     where URL_CHA not like 'http://%' and URL_PLA not like 'http://%');
+
