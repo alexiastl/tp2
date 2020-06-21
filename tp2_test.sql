@@ -161,8 +161,6 @@ alter table TP2_CRITIQUE
 alter table TP2_CRITIQUE 
     add constraint FK_CRI_REPOND_A foreign key (REPOND_A_NO_CRITIQUE) references TP2_CRITIQUE(NO_CRITIQUE);
 
-alter table TP2_CRITIQUE 
-    add constraint FK_CRI_SURNOM_MEM foreign key (SURNOM_MEMBRE) references TP2_VUE_MEMBRE(SURNOM_MEMBRE);
     
 create sequence NO_CRITIQUE_SEQ
     start with 5 
@@ -236,15 +234,6 @@ insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MN
     
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Laval', 'Enfant', 'Avant-midi', 9.99);
-    
-insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
-    values ('Phillips','Todd');
-    
-insert into TP2_REALISATEUR_OEUVRE 
-    VALUES(1,1);
-    
-insert into TP2_REALISATEUR_OEUVRE 
-    VALUES(2,2);
 
 insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
     values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'));
@@ -274,8 +263,13 @@ create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COUR
         from TP2_UTILISATEUR
             where TYPE_UTI = 'Employé';
 
+
+
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'MovieLover',to_date('20-01-03','YY-MM-DD'),10.0,'C''est trop triste...');
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
+
+alter table TP2_CRITIQUE 
+    add constraint FK_CRI_SURNOM_MEM foreign key (SURNOM_MEMBRE) references TP2_VUE_MEMBRE(SURNOM_MEMBRE);
