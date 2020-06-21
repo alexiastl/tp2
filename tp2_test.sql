@@ -259,7 +259,7 @@ insert into TP2_ROLE_OEUVRE (NO_OEUVRE, PERSONNAGE, NO_ACTEUR)
     values (2,'Arthur Fleck / Le Joker',2);
 
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
-    values ('MovieLover','Doe','Jane','janedoe@gmail.com',to_date('80-8-6','YY-MM-DD'),'motdepasse123','Utilisateur');
+    values ('MovieLover','Doe','Jane','janedoe@gmail.com',to_date('80-8-6','YY-MM-DD'),'motdepasse123','Membre');
 
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
     values ('BobMod','Tremblay','Bob','bobmoderateur@quebingeton.com',to_date('90-03-03','YY-MM-DD'),'fG54pot*','Employé');    
