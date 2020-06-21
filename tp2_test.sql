@@ -160,7 +160,8 @@ alter table TP2_CRITIQUE
 
 alter table TP2_CRITIQUE 
     add constraint FK_CRI_REPOND_A foreign key (REPOND_A_NO_CRITIQUE) references TP2_CRITIQUE(NO_CRITIQUE);
-
+alter table TP2_CRITIQUE 
+    add constraint FK_CRI_SURNOM_MEM foreign key (SURNOM_MEMBRE) references TP2_UTILISATEUR(LOGIN_UTILISATEUR);
     
 create sequence NO_CRITIQUE_SEQ
     start with 5 
@@ -271,5 +272,3 @@ insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,C
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
 
-alter table TP2_CRITIQUE 
-    add constraint FK_CRI_SURNOM_MEM foreign key (SURNOM_MEMBRE) references TP2_VUE_MEMBRE(SURNOM_MEMBRE);
