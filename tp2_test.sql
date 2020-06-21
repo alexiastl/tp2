@@ -12,7 +12,7 @@ drop table TP2_ROLE_OEUVRE cascade constraints;
 drop table TP2_ACTEUR cascade constraints;
 drop table TP2_UTILISATEUR cascade constraints;
 drop table TP2_CRITIQUE cascade constraints;
-drop sequence NO_CRITIQUE_SEQ ; 
+drop sequence NO_CRITIQUE_SEQ;
 
 create table TP2_PLATEFORME(
     NOM_PLATEFORME varchar2(40) not null,
@@ -121,7 +121,7 @@ create table TP2_CRITIQUE(
     NO_OEUVRE number(6,0) not null,
     SURNOM_MEMBRE varchar2(10) not null, /*verifier comme login*/ 
     DATE_CRI date default sysdate not null,
-    COTE_CRI number(2,1) not null, 
+    COTE_CRI number(3,1) not null, 
     COMMENTAIRE_CRI VARCHAR2(500) null,
     REPOND_A_NO_CRITIQUE NUMBER(6,0) null,
     constraint PK_CRITIQUE primary key(NO_CRITIQUE),
@@ -157,22 +157,9 @@ alter table TP2_ROLE_OEUVRE
 
 alter table TP2_CRITIQUE 
     add constraint FK_CRI_NO_OEUVRE foreign key (NO_OEUVRE) references TP2_OEUVRE(NO_OEUVRE);
-    
-
 
 alter table TP2_CRITIQUE 
     add constraint FK_CRI_REPOND_A foreign key (REPOND_A_NO_CRITIQUE) references TP2_CRITIQUE(NO_CRITIQUE);
-
-
-create or replace view TP2_VUE_MEMBRE (SURNOM_MEMBRE, NOM_MEM, PRENOM_MEM, COURRIEL_MEM, DATE_NAISSANCE_MEM, MOT_DE_PASSE_MEM) as
-    select LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI, DATE_NAISSANCE_UTI, MOT_DE_PASSE_UTI
-        from TP2_UTILISATEUR
-            where TYPE_UTI = 'Membre';
-            
-create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COURRIEL_EMP, MOT_DE_PASSE_EMP) as
-    select LOGIN_UTILISATEUR, PRENOM_UTI, NOM_UTI, COURRIEL_UTI, MOT_DE_PASSE_UTI
-        from TP2_UTILISATEUR
-            where TYPE_UTI = 'Employé';
 
 alter table TP2_CRITIQUE 
     add constraint FK_CRI_SURNOM_MEM foreign key (SURNOM_MEMBRE) references TP2_VUE_MEMBRE(SURNOM_MEMBRE);
@@ -180,6 +167,33 @@ alter table TP2_CRITIQUE
 create sequence NO_CRITIQUE_SEQ
     start with 5 
     increment by 5 ;
+
+insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSYS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
+    values ('Titanic',1997,'Romance',
+        'Southampton, 10 avril 1912. Le paquebot le plus grand et le plus moderne du monde, réputé pour son insubmersibilité, 
+        le "Titanic", appareille pour son premier voyage. Quatre jours plus tard, il heurte un iceberg. 
+        A son bord, un artiste pauvre et une grande bourgeoise tombent amoureux.',188,7.8,'Paramount Pictures');
+
+insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSYS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
+    values ('Joker',2019,'drame',
+        'Le film, qui relate une histoire originale inédite sur grand écran, se focalise sur la figure emblématique de 
+        l''ennemi juré de Batman. Il brosse le portrait d''Arthur Fleck, un homme sans concession méprisé par la société. ',
+        122,8.5,'DC FIlms');
+
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
+    values ('Cameron','James');
+    
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
+    values ('Phillips','Todd');
+    
+insert into TP2_REALISATEUR_OEUVRE 
+    VALUES(1,1);
+    
+insert into TP2_REALISATEUR_OEUVRE 
+    VALUES(2,2);
+
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
+    values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'));
 
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
     values('Netflix', 'Netflix', 'www.netflix.com');
@@ -222,20 +236,6 @@ insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MN
     
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Laval', 'Enfant', 'Avant-midi', 9.99);
-insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSYS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
-    values ('Titanic',1997,'Romance',
-        'Southampton, 10 avril 1912. Le paquebot le plus grand et le plus moderne du monde, réputé pour son insubmersibilité, 
-        le "Titanic", appareille pour son premier voyage. Quatre jours plus tard, il heurte un iceberg. 
-        A son bord, un artiste pauvre et une grande bourgeoise tombent amoureux.',188,7.8,'Paramount Pictures');
-
-insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSYS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
-    values ('Joker',2019,'drame',
-        'Le film, qui relate une histoire originale inédite sur grand écran, se focalise sur la figure emblématique de 
-        l''ennemi juré de Batman. Il brosse le portrait d''Arthur Fleck, un homme sans concession méprisé par la société. ',
-        122,8.5,'DC FIlms');
-
-insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
-    values ('Cameron','James');
     
 insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
     values ('Phillips','Todd');
@@ -263,3 +263,21 @@ insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UT
 
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
     values ('BobMod','Tremblay','Bob','bobmoderateur@quebingeton.com',to_date('90-03-03','YY-MM-DD'),'fG54pot*','Employé');    
+
+create or replace view TP2_VUE_MEMBRE (SURNOM_MEMBRE, NOM_MEM, PRENOM_MEM, COURRIEL_MEM, DATE_NAISSANCE_MEM, MOT_DE_PASSE_MEM) as
+    select LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI, DATE_NAISSANCE_UTI, MOT_DE_PASSE_UTI
+        from TP2_UTILISATEUR
+            where TYPE_UTI = 'Membre';
+            
+create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COURRIEL_EMP, MOT_DE_PASSE_EMP) as
+    select LOGIN_UTILISATEUR, PRENOM_UTI, NOM_UTI, COURRIEL_UTI, MOT_DE_PASSE_UTI
+        from TP2_UTILISATEUR
+            where TYPE_UTI = 'Employé';
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,1, 'MovieLover',to_date('20-01-03','YY-MM-DD'),10.0,'C''est trop triste...');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
+    values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
+
+    
