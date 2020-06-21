@@ -67,7 +67,7 @@ create table TP2_OEUVRE (
     TITRE_OEU varchar2(30) not null,
     ANNEE_OEU number(4,0) not null,
     GENRE_OEU varchar2(30) not null,
-    SYNOPSYS_OEU varchar2(500) not null,
+    SYNOPSIS_OEU varchar2(500) not null,
     DUREE_OEU number(3,0) not null,
     CLASSEMENT_OEU number(2,1) null,
     COMPAGNIE_OEU varchar2(30) not null,
@@ -167,13 +167,13 @@ create sequence NO_CRITIQUE_SEQ
     start with 5 
     increment by 5 ;
 
-insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSYS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
+insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
     values ('Titanic',1997,'Romance',
         'Southampton, 10 avril 1912. Le paquebot le plus grand et le plus moderne du monde, réputé pour son insubmersibilité, 
         le "Titanic", appareille pour son premier voyage. Quatre jours plus tard, il heurte un iceberg. 
         A son bord, un artiste pauvre et une grande bourgeoise tombent amoureux.',188,7.8,'Paramount Pictures');
 
-insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSYS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
+insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
     values ('Joker',2019,'drame',
         'Le film, qui relate une histoire originale inédite sur grand écran, se focalise sur la figure emblématique de 
         l''ennemi juré de Batman. Il brosse le portrait d''Arthur Fleck, un homme sans concession méprisé par la société. ',
@@ -195,28 +195,28 @@ insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
     values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'));
 
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
-    values('Netflix', 'Netflix', 'www.netflix.com');
+    values('Netflix', 'Netflix', 'http://www.netflix.com');
     
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
-    values('HBO', 'HBO Go', 'www.hbo.com');
+    values('HBO', 'HBO Go', 'http://www.hbo.com');
     
 insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
-    values('Netflix', 1, to_date('19:30', 'HH24:MI'));
+    values('Netflix', 1, to_date('2018-05-22 19:30', 'YYYY-MM-DD HH24:MI'));
     
 insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
-    values('HBO', 2, to_date('12:30', 'HH24:MI'));
+    values('HBO', 2, to_date('2020-03-13 12:30', 'YYYY-MM-DD HH24:MI'));
     
 insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
-    values('TVA', 'Groupe TVA', 'www.tva.ca');
+    values('TVA', 'Groupe TVA', 'http://www.tva.ca');
     
 insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
-    values('VRAK', 'Bell Media', 'www.vrak.tv');
+    values('VRAK', 'Bell Media', 'http://www.vrak.tv');
     
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
-    values('TVA', 1, to_date('11:30', 'HH24:MI'));
+    values('TVA', 1, to_date('2018-05-17 12:30', 'YYYY-MM-DD HH24:MI'));
     
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
-    values('VRAK', 2, to_date('18:45', 'HH24:MI'));
+    values('VRAK', 2, to_date('2020-06-17 18:45', 'YYYY-MM-DD HH24:MI'));
 
 insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
     values('Cineplex Odeon Beauport', 'Cineplex', '825 Rue Clémenceau', 'Québec', '(418)661-9494');
@@ -271,4 +271,34 @@ insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,C
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
+
+delete from TP2_HORAIRE_PLATEFORME
+    where add_months(DATE_HEURE_HORP, 24) < sysdate;
+    
+select TITRE_OEU, ANNEE_OEU, SYNOPSIS_OEU
+    from TP2_OEUVRE
+        where COMPAGNIE_OEU = 'Paramount Pictures'
+            order by ANNEE_OEU desc;
+            
+select NOM_CHAINE
+    from TP2_CHAINE
+        where URL_CHA like 'http://%' and NOM_CHAINE not in(
+            select NOM_PLATEFORME
+                from TP2_PLATEFORME
+                    where URL_PLA like 'http://%');
+                    
+(select NOM_CHAINE
+    from TP2_CHAINE
+        where URL_CHA like 'http://%')
+minus
+(select NOM_PLATEFORME
+    from TP2_PLATEFORME
+        where URL_PLA like 'http://%');
+
+select NOM_CHAINE
+    from TP2_CHAINE
+        where not exists(
+            select NOM_PLATEFORME
+                from TP2_PLATEFORME
+                    where URL_CHA not like 'http://%' and URL_PLA not like 'http://%');
 
