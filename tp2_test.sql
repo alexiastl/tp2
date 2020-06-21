@@ -58,7 +58,6 @@ create table TP2_BILLET_CINEMA(
     NOM_CINEMA varchar2(40) not null,
     CATEGORIE_BIL varchar2(40) not null,
     PERIODE_JOURNEE_BIL varchar(40) not null,
-    VILLE_CIN varchar(40) not null,
     MNT_PRIX_BIL number(4,2) default 12.99 not null,
     constraint PK_BILLET_CINEMA primary key (NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL));
     
@@ -71,7 +70,7 @@ create table TP2_OEUVRE (
     SYNOPSYS_OEU varchar2(500) not null,
     DUREE_OEU number(3,0) not null,
     CLASSEMENT_OEU number(2,1) null,
-    COMPAGNIE_OEU number(2,1) not null,
+    COMPAGNIE_OEU varchar2(30) not null,
     constraint PK_OEUVRE primary key (NO_OEUVRE)
 );
 
@@ -163,3 +162,45 @@ create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COUR
 create sequence NO_CRITIQUE_SEQ
     start with 5 
     increment by 5 ;
+
+insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
+    values('Netflix', 'Netflix', 'www.netflix.com');
+    
+insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
+    values('HBO', 'HBO Go', 'www.hbo.com');
+    
+insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
+    values('Netflix', 1, to_date('19:30', 'HH24:MI'));
+    
+insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
+    values('HBO', 2, to_date('12:30', 'HH24:MI'));
+    
+insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
+    values('TVA', 'Groupe TVA', 'www.tva.ca');
+    
+insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
+    values('VRAK', 'Bell Media', 'www.vrak.tv');
+    
+insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
+    values('TVA', 1, to_date('11:30', 'HH24:MI'));
+    
+insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
+    values('VRAK', 2, to_date('18:45', 'HH24:MI'));
+
+insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
+    values('Cineplex Odeon Beauport', 'Cineplex', '825 Rue Clémenceau', 'Québec', '(418)661-9494');
+    
+insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
+    values('Cineplex Laval', 'Cineplex', '2800 Ave du Cosmodôme', 'Laval', '(450)978-0212');
+    
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Cineplex Odeon Beauport', 1, to_date('2020-01-17', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-02', 'YYYY-MM-DD'));
+    
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Cineplex Laval', 2, to_date('2020-02-18', 'YYYY-MM-DD'), to_date('14:30', 'HH24:MI'), to_date('2020-04-08', 'YYYY-MM-DD'));
+    
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Cineplex Odeon Beauport', 'Adulte', 'Après-midi', 11.99);
+    
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Cineplex Laval', 'Enfant', 'Avant-midi', 9.99);
