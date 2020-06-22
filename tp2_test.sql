@@ -267,8 +267,22 @@ create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COUR
 
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
-    values (NO_CRITIQUE_SEQ.nextval,1, 'MovieLover',to_date('20-01-03','YY-MM-DD'),10.0,'C''est trop triste...');
+    values (NO_CRITIQUE_SEQ.nextval,1, 'MovieLover',to_date('20-01-03','YY-MM-DD'),10.0,'C''est trop triste... fuck');
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
 
+/*e) Mise à jour des critiques pour remplacer toutes les occurences du 'fuck' par '#####' */
+update TP2_CRITIQUE
+    set COMMENTAIRE_CRI = '#####'
+    where lower(COMMENTAIRE_CRI) like '%fuck%';
+/*g)i)*/
+
+/*h) Affichage du nom du cinéma, nombre de catégories de billet, nombre de périodes, moyenne des prix
+prix max, équart entre les 2 montants*/
+
+select NOM_CINEMA, count(CATEGORIE_BIL)as NOMBRE_CATEGORIE_BIL, count(PERIODE_JOURNEE_BIL) as NOMBRE_PERIODE_JOURNEE, 
+avg(MNT_PRIX_BIL) as PRIX_MOYEN_BIL, MAX(MNT_PRIX_BIL)as PRIX_MAX_BIL, 
+avg(MNT_PRIX_BIL)- MAX(MNT_PRIX_BIL) as DIFFERENCE_MOYEN_MAX
+    from TP2_BILLET_CINEMA
+    group by NOM_CINEMA;
