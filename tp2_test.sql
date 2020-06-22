@@ -168,7 +168,7 @@ create sequence NO_CRITIQUE_SEQ
     increment by 5 ;
 
 insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
-    values ('Titanic',1997,'Romance',
+    values ('Titanic',1997,'romance',
         'Southampton, 10 avril 1912. Le paquebot le plus grand et le plus moderne du monde, réputé pour son insubmersibilité, 
         le "Titanic", appareille pour son premier voyage. Quatre jours plus tard, il heurte un iceberg. 
         A son bord, un artiste pauvre et une grande bourgeoise tombent amoureux.',188,7.8,'Paramount Pictures');
@@ -178,6 +178,11 @@ insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU
         'Le film, qui relate une histoire originale inédite sur grand écran, se focalise sur la figure emblématique de 
         l''ennemi juré de Batman. Il brosse le portrait d''Arthur Fleck, un homme sans concession méprisé par la société. ',
         122,8.5,'DC FIlms');
+
+insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
+    values ('Cadavres à tous les clics',2019,'thriller','Plusieurs membres du site Quebingeton sont décédés de façon
+    suspecte.',
+        96,6.5,'Horror Studio');
 
 insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
     values ('Cameron','James');
@@ -218,6 +223,12 @@ insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
     values('VRAK', 2, to_date('2020-06-17 18:45', 'YYYY-MM-DD HH24:MI'));
 
+insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
+    values('TVA', 3, to_date('2019-12-12 12:30', 'YYYY-MM-DD HH24:MI'));
+    
+insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
+    values('VRAK', 3, to_date('2017-07-30 18:45', 'YYYY-MM-DD HH24:MI'));
+
 insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
     values('Cineplex Odeon Beauport', 'Cineplex', '825 Rue Clémenceau', 'Québec', '(418)661-9494');
     
@@ -232,9 +243,18 @@ insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HOR
     
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Odeon Beauport', 'Adulte', 'Après-midi', 11.99);
+
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Cineplex Odeon Beauport', 'Adulte', 'Soir', 12.99);
+
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Cineplex Odeon Beauport', 'Étudiant', 'Soir', 5.99);
     
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Laval', 'Enfant', 'Avant-midi', 9.99);
+
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Cineplex Laval', 'Adulte', 'Avant-midi', 11.99);
 
 insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
     values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'));
@@ -302,17 +322,29 @@ select NOM_CHAINE
                 from TP2_PLATEFORME
                     where URL_CHA not like 'http://%' and URL_PLA not like 'http://%');
 
-/*e) Mise à jour des critiques pour remplacer toutes les occurences du 'fuck' par '#####' */
+/*e)*/
 update TP2_CRITIQUE
     set COMMENTAIRE_CRI = '#####'
     where lower(COMMENTAIRE_CRI) like '%fuck%';
-/*g)i)*/
 
-/*h) Affichage du nom du cinéma, nombre de catégories de billet, nombre de périodes, moyenne des prix
-prix max, équart entre les 2 montants*/
-
+/*h)*/
 select NOM_CINEMA, count(CATEGORIE_BIL)as NOMBRE_CATEGORIE_BIL, count(PERIODE_JOURNEE_BIL) as NOMBRE_PERIODE_JOURNEE, 
 avg(MNT_PRIX_BIL) as PRIX_MOYEN_BIL, MAX(MNT_PRIX_BIL)as PRIX_MAX_BIL, 
-avg(MNT_PRIX_BIL)- MAX(MNT_PRIX_BIL) as DIFFERENCE_MOYEN_MAX
+MAX(MNT_PRIX_BIL)- avg(MNT_PRIX_BIL)  as DIFFERENCE_MOYEN_MAX
     from TP2_BILLET_CINEMA
     group by NOM_CINEMA;
+    
+/*g)i)*/
+select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
+    from TP2_CHAINE
+    where NOM_CHAINE in 
+        (select NOM_CHAINE
+            from TP2_HORAIRE_CHAINE
+            where DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD') 
+            and NO_OEUVRE = 3);
+/*g)j)*/
+select  NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
+    from (TP2_HORAIRE_CHAINE join TP2_CHAINE  using (NOM_CHAINE)) join TP2_OEUVRE using (NO_OEUVRE)
+    where TITRE_OEU = 'Cadavres à tous les clics' and DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD');
+/*g)k)*/
+
