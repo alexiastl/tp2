@@ -121,7 +121,7 @@ create table TP2_CRITIQUE(
     NO_OEUVRE number(6,0) not null,
     SURNOM_MEMBRE varchar2(10) not null, /*verifier comme login*/ 
     DATE_CRI date default sysdate not null,
-    COTE_CRI number(3,1) not null, 
+    COTE_CRI number(3,1) null, 
     COMMENTAIRE_CRI VARCHAR2(500) null,
     REPOND_A_NO_CRITIQUE NUMBER(6,0) null,
     constraint PK_CRITIQUE primary key(NO_CRITIQUE),
@@ -195,9 +195,6 @@ insert into TP2_REALISATEUR_OEUVRE
     
 insert into TP2_REALISATEUR_OEUVRE 
     VALUES(2,2);
-
-insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
-    values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'));
 
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
     values('Netflix', 'Netflix', 'http://www.netflix.com');
@@ -341,10 +338,19 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
         (select NOM_CHAINE
             from TP2_HORAIRE_CHAINE
             where DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD') 
-            and NO_OEUVRE = 3);
+            and NO_OEUVRE in (select NO_OEUVRE
+                                from TP2_OEUVRE
+                                where TITRE_OEU = 'Cadavres à tous les clics'));
 /*g)j)*/
 select  NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
     from (TP2_HORAIRE_CHAINE join TP2_CHAINE  using (NOM_CHAINE)) join TP2_OEUVRE using (NO_OEUVRE)
     where TITRE_OEU = 'Cadavres à tous les clics' and DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD');
 /*g)k)*/
-
+select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
+    from TP2_CHAINE CH
+    where exists (select NO_OEUVRE 
+                    from TP2_HORAIRE_CHAINE HC
+                    where (CH.NOM_CHAINE=HC.NOM_CHAINE and DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD' )
+                    and exists (select NO_OEUVRE 
+                                    from TP2_OEUVRE O
+                                    where TITRE_OEU ='Cadavres à tous les clics' and HC.NO_OEUVRE = O.NO_OEUVRE)));
