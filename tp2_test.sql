@@ -355,12 +355,7 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
                                     from TP2_OEUVRE O
                                     where TITRE_OEU ='Cadavres à tous les clics' and HC.NO_OEUVRE = O.NO_OEUVRE)));
                                     
-/*c)Donnez 1 requête d'insertion SQL valide (au total et non 1 par table) de la forme insert select prenant des
-acteurs pour qu'ils deviennent des utilisateurs. Le login sera une combinaison de 3 premièrs lettres du prénom
-et de 2 premières lettres du nom suivi d'un nombre aléatoire. Le mot de passe de 10 caractères sera retourné
-par la fonction FCT_GENERER_MOT_DE_PASSE que vous devez créer à la question 2c), le type
-d'utilisateur sera 'Acteur'.*/
-
+/*c)*/
 
 insert into TP2_UTILISATEUR(LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI, DATE_NAISSANCE_UTI, MOT_DE_PASSE_UTI, TYPE_UTI)
     select substr(PRENOM_ACT,1,3) || substr(NOM_ACT,1,2) || floor(dbms_random.value(1,100)), NOM_ACT, PRENOM_ACT, null,
