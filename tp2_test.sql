@@ -354,3 +354,18 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
                     and exists (select NO_OEUVRE 
                                     from TP2_OEUVRE O
                                     where TITRE_OEU ='Cadavres à tous les clics' and HC.NO_OEUVRE = O.NO_OEUVRE)));
+
+create or replace view TP2_VUE_CRITIQUE (SURNOM_MEM,DATE_NAISSANCE_MEM, NO_CRITIQUE,NO_CRITIQUE_REPONDUE,CHEMIN,NIVEAU) as
+    select substr(lpad(' ', LEVEL*2 , ' ') || SURNOM_MEMBRE,1,30) as ARBRE,
+            DATE_NAISSANCE_UTI, NO_CRITIQUE, REPOND_A_NO_CRITIQUE,
+            sys_connect_by_path(SURNOM_MEMBRE, '/') as CHEMIN,
+            level as NIVEAU
+        from TP2_UTILISATEUR U join TP2_CRITIQUE C on U.LOGIN_UTILISATEUR = C.SURNOM_MEMBRE
+        connect by prior NO_CRITIQUE = REPOND_A_NO_CRITIQUE
+        start with REPOND_A_NO_CRITIQUE is null;
+col ARBRE format a40
+col CHEMIN format a40  
+    
+select *
+    from TP2_VUE_CRITIQUE;
+    
