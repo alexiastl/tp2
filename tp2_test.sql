@@ -108,7 +108,7 @@ create table TP2_UTILISATEUR (
     LOGIN_UTILISATEUR varchar2(10)not null, /*A VERIFIER*/
     NOM_UTI varchar2(30) not null,
     PRENOM_UTI varchar2(30) not null,
-    COURRIEL_UTI varchar2(30) not null,
+    COURRIEL_UTI varchar2(30) null,
     DATE_NAISSANCE_UTI date not null,
     MOT_DE_PASSE_UTI varchar2(15) not null, /*A verifier*/
     TYPE_UTI varchar2(30) default 'Utilisateur' not null,
@@ -288,22 +288,22 @@ insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,C
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
-
+/*d)*/
 delete from TP2_HORAIRE_PLATEFORME
     where add_months(DATE_HEURE_HORP, 24) < sysdate;
-    
+ /*f)*/
 select TITRE_OEU, ANNEE_OEU, SYNOPSIS_OEU
     from TP2_OEUVRE
         where COMPAGNIE_OEU = 'Paramount Pictures'
             order by ANNEE_OEU desc;
-            
+/*i) i)*/            
 select NOM_CHAINE
     from TP2_CHAINE
         where URL_CHA like 'http://%' and NOM_CHAINE not in(
             select NOM_PLATEFORME
                 from TP2_PLATEFORME
                     where URL_PLA like 'http://%');
-                    
+/*i) ii)*/                
 (select NOM_CHAINE
     from TP2_CHAINE
         where URL_CHA like 'http://%')
@@ -311,7 +311,7 @@ minus
 (select NOM_PLATEFORME
     from TP2_PLATEFORME
         where URL_PLA like 'http://%');
-
+/*i) iii)*/   
 select NOM_CHAINE
     from TP2_CHAINE
         where not exists(
@@ -354,6 +354,13 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
                     and exists (select NO_OEUVRE 
                                     from TP2_OEUVRE O
                                     where TITRE_OEU ='Cadavres à tous les clics' and HC.NO_OEUVRE = O.NO_OEUVRE)));
+                                    
+/*c)*/
+
+insert into TP2_UTILISATEUR(LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI, DATE_NAISSANCE_UTI, MOT_DE_PASSE_UTI, TYPE_UTI)
+    select substr(PRENOM_ACT,1,3) || substr(NOM_ACT,1,2) || floor(dbms_random.value(1,100)), NOM_ACT, PRENOM_ACT, null,
+    DATE_NAISSANCE_ACT, '123', 'Acteur'
+        from TP2_ACTEUR;
 
 create or replace view TP2_VUE_CRITIQUE (SURNOM_MEM,DATE_NAISSANCE_MEM, NO_CRITIQUE,NO_CRITIQUE_REPONDUE,CHEMIN,NIVEAU) as
     select substr(lpad(' ', LEVEL*2 , ' ') || SURNOM_MEMBRE,1,30) as ARBRE,
