@@ -477,11 +477,18 @@ end FCT_GENERER_MOT_DE_PASSE;
 /
 select FCT_GENERER_MOT_DE_PASSE (4) from dual;
 
-
-/* 
-d) Donnez la requête SQL qui crée une fonction nommée FCT_GENERER_MOT_DE_PASSE qui a comme
-paramètre un entier entre 8 et 12 représentants le nombre ds caractères du mot de passe. Si le nombre est
-passé est inférieur à 8, alors la fonction utilise 8. Si c'est plus grand que 12, la fonction utilise 12. La fonction
-génère et retourne un mot de passe alphanumérique du nombre de caractères passé en paramètre. Vous
-devez programmer vous-mêmes cette génération. */ 
+/* 2) e) Cette fonction permet de trouver la moyenne des côtes des films par genre et année d'oeuvre. Cela permettrait à Quebingeton d'améliorer son chiffre d'affaire
+car il pourrait facilement évaluer la tendance de quelles sont les genres qui font fureurs et lesquels ne plaisent pas à ses spectateurs. De ce fait, Quebingeton
+pourrait mettre davantage d'emphase sur l'acquisition des genres les plus populaires.*/
+create or replace function FCT_COTE_MOYENNE_FILM_GENRE (P_I_GENRE_OEU varchar2, P_I_ANNEE_OEU number) return number
+is
+    V_COTE_MOYENNE number (3,1);
+begin
+    select avg(COTE_CRI) into V_COTE_MOYENNE
+        from (TP2_OEUVRE natural join TP2_REALISATEUR_OEUVRE) natural join TP2_CRITIQUE
+            where GENRE_OEU = P_I_GENRE_OEU and ANNEE_OEU = P_I_ANNEE_OEU;
+    return V_COTE_MOYENNE;
+end FCT_COTE_MOYENNE_FILM_GENRE;
+/
+select FCT_COTE_MOYENNE_FILM_GENRE('romance', '1997') from DUAL;
     
