@@ -398,9 +398,10 @@ begin
 end TRG_AIU_DATE_HORC_FILM;
 /
 
+
 /* Requetes de validation pour la 2) a)
 insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
-    values('Cineplex Odeon Beauport', 1, to_date('2020-04-18', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-06-02', 'YYYY-MM-DD'));
+    values('Cineplex Odeon Beauport', 1, to_date('2020-04-18', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-06-02', 'YYYY-MM-DD')); 
     
 update TP2_HORAIRE_CINEMA
     set DATE_DEBUT_HORC = to_date('2020-02-17', 'YYYY-MM-DD')
@@ -411,10 +412,6 @@ insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HOR
     
     
 /* 
-b) Donnez la requête SQL qui crée une fonction nommée FCT_COTE_MOYENNE_FILM_REAL qui reçoit en
-paramètre un titre de film et un no de réalisateur et retourne la moyenne des cotes du film de ce réalisateur.
-c) Donnez la requête SQL qui crée une procédure stockée nommée SP_PURGER_HORAIRE qui reçoit en
-paramètre une date et efface toutes les horaires (tous les types), dont la date de début est avant cette date.
 d) Donnez la requête SQL qui crée une fonction nommée FCT_GENERER_MOT_DE_PASSE qui a comme
 paramètre un entier entre 8 et 12 représentants le nombre ds caractères du mot de passe. Si le nombre est
 passé est inférieur à 8, alors la fonction utilise 8. Si c'est plus grand que 12, la fonction utilise 12. La fonction
