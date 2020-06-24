@@ -379,7 +379,7 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
 
 insert into TP2_UTILISATEUR(LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI, DATE_NAISSANCE_UTI, MOT_DE_PASSE_UTI, TYPE_UTI)
     select substr(PRENOM_ACT,1,3) || substr(NOM_ACT,1,2) || floor(dbms_random.value(1,100)), NOM_ACT, PRENOM_ACT, COURRIEL_ACT,
-    DATE_NAISSANCE_ACT, '123', 'Acteur'
+    DATE_NAISSANCE_ACT, (select FCT_GENERER_MOT_DE_PASSE(8) from DUAL), 'Acteur'
         from TP2_ACTEUR;
 
 create or replace view TP2_VUE_CRITIQUE (SURNOM_MEM,DATE_NAISSANCE_MEM, NO_CRITIQUE,NO_CRITIQUE_REPONDUE,CHEMIN,NIVEAU) as
@@ -395,7 +395,13 @@ col CHEMIN format a40
     
 select *
     from TP2_VUE_CRITIQUE;
-    
+
+insert into TP2_VUE_CRITIQUE (SURNOM_MEM, DATE_NAISSANCE_MEM,NO_CRITIQUE,NO_CRITIQUE_REPONDUE) 
+    values ('MovieLover',to_date('80-08-06', 'YYYY-MM-DD'), NO_CRITIQUE_SEQ.nextval,null);
+/*Le insert ci-dessus provoque une erreur. Il n'est pas possible d'ajouter un enregistrement dans la table TP2_VUE_CRITIQUE.
+Puisque celle-ci a été obtenue par la jointure de TP2_UTILISATEUR et TP2_CRITIQUE, Oracle ne permet pas de passer par 
+la vue pour changer son contenu.*/
+
 /* 2) a) */
     
 create or replace trigger TRG_AIU_DATE_HORC_FILM
@@ -492,3 +498,4 @@ end FCT_COTE_MOYENNE_FILM_GENRE;
 /
 select FCT_COTE_MOYENNE_FILM_GENRE('romance', '1997') from DUAL;
     
+
