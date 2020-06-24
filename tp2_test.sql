@@ -1,3 +1,5 @@
+set SERVEROUTPUT ON
+
 drop table TP2_PLATEFORME cascade constraints;
 drop table TP2_HORAIRE_PLATEFORME cascade constraints;
 drop table TP2_CHAINE cascade constraints;
@@ -69,7 +71,7 @@ create table TP2_OEUVRE (
     GENRE_OEU varchar2(30) not null,
     SYNOPSIS_OEU varchar2(500) not null,
     DUREE_OEU number(3,0) not null,
-    CLASSEMENT_OEU number(2,1) null,
+    CLASSEMENT_OEU varchar2(10) not null,
     COMPAGNIE_OEU varchar2(30) not null,
     constraint PK_OEUVRE primary key (NO_OEUVRE)
 );
@@ -116,13 +118,14 @@ create table TP2_UTILISATEUR (
     constraint AK_COURRIEL_UTI unique (COURRIEL_UTI)
 );
 
+/* On suppose qu'une critique paren*/
 create table TP2_CRITIQUE(
     NO_CRITIQUE number(6,0) not null,
     NO_OEUVRE number(6,0) not null,
     SURNOM_MEMBRE varchar2(10) not null, /*verifier comme login*/ 
     DATE_CRI date default sysdate not null,
     COTE_CRI number(3,1) null, 
-    COMMENTAIRE_CRI VARCHAR2(500) null,
+    COMMENTAIRE_CRI VARCHAR2(500) default ' ' not null,
     REPOND_A_NO_CRITIQUE NUMBER(6,0) null,
     constraint PK_CRITIQUE primary key(NO_CRITIQUE),
     constraint AK_CRITIQUE unique (NO_OEUVRE, SURNOM_MEMBRE, DATE_CRI)
@@ -171,18 +174,18 @@ insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU
     values ('Titanic',1997,'romance',
         'Southampton, 10 avril 1912. Le paquebot le plus grand et le plus moderne du monde, réputé pour son insubmersibilité, 
         le "Titanic", appareille pour son premier voyage. Quatre jours plus tard, il heurte un iceberg. 
-        A son bord, un artiste pauvre et une grande bourgeoise tombent amoureux.',188,7.8,'Paramount Pictures');
+        A son bord, un artiste pauvre et une grande bourgeoise tombent amoureux.',188,'G','Paramount Pictures');
 
 insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
     values ('Joker',2019,'drame',
         'Le film, qui relate une histoire originale inédite sur grand écran, se focalise sur la figure emblématique de 
         l''ennemi juré de Batman. Il brosse le portrait d''Arthur Fleck, un homme sans concession méprisé par la société. ',
-        122,8.5,'DC FIlms');
+        122,'12+','DC FIlms');
 
 insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
     values ('Cadavres à tous les clics',2019,'thriller','Plusieurs membres du site Quebingeton sont décédés de façon
     suspecte.',
-        96,6.5,'Horror Studio');
+        96,'18+','Horror Studio');
 
 insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
     values ('Cameron','James');
@@ -376,3 +379,37 @@ col CHEMIN format a40
 select *
     from TP2_VUE_CRITIQUE;
     
+create or replace trigger TRG_AUI_HORAIRE_CINEMA
+    after update or insert on TP2_HORAIRE_CINEMA for each row
+declare
+    cursor HORAIRE_CINEMA_CURSEUR is
+        select DATE_DEBUT_HORC, DATE_FIN_HORC
+        from TP2_HORAIRE_CINEMA
+        where NO_OEUVRE = :NEW.NO_OEUVRE;
+begin
+    for HEURES_ENREGISTREMENT in HORAIRE_CINEMA_CURSEUR
+    loop
+        if not (  HEURES_ENREGISTREMENT.DATE_FIN_HORC <=:NEW.DATE_DEBUT_HORC 
+        or HEURES_ENREGISTREMENT.DATE_DEBUT_HORC >= :NEW.DATE_FIN_HORC)
+        then raise_application_error(-20032,'message');
+        end if;
+    end loop;
+end TRG_AUI_HORAIRE_CINEMA;
+/
+/*************************************************************/
+create or replace function FCT_COTE_MOYENNE_FILM_REA (P_I_TITRE_FIL varchar2,P_I_NO_REALISATEU number) return number
+is
+    V_COTE_MOYENNE number (3,1);
+begin
+    DBMS_OUTPUT.PUT_LINE('hello');
+end FCT_COTE_MOYENNE_FILM_REA;
+/
+/*************************************************************/
+create or replace procedure SP_PURGER_HORAIRE(P_I_DATE date) 
+is
+    V_A number;
+begin
+    dbms_output.put_line('Pas de maison existante');
+end SP_PURGER_HORAIRE;
+/
+/*************************************************************/    
