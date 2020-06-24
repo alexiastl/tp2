@@ -113,7 +113,7 @@ create table TP2_UTILISATEUR (
     PRENOM_UTI varchar2(30) not null,
     COURRIEL_UTI varchar2(30) not null,
     DATE_NAISSANCE_UTI date not null,
-    MOT_DE_PASSE_UTI varchar2(15) not null, /*A verifier*/
+    MOT_DE_PASSE_UTI varchar2(12) not null, /*A verifier*/
     TYPE_UTI varchar2(30) default 'Utilisateur' not null,
     constraint PK_UTILISATEUR primary key (LOGIN_UTILISATEUR),
     constraint AK_COURRIEL_UTI unique (COURRIEL_UTI)
@@ -270,7 +270,13 @@ insert into TP2_ROLE_OEUVRE (NO_OEUVRE, PERSONNAGE, NO_ACTEUR)
     values (2,'Arthur Fleck / Le Joker',2);
 
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
-    values ('MovieLover','Doe','Jane','janedoe@gmail.com',to_date('80-8-6','YY-MM-DD'),'motdepasse123','Membre');
+    values ('MovieLover','Doe','Jane','janedoe@gmail.com',to_date('80-8-6','YY-MM-DD'),'motdepass','Membre');
+    
+insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
+    values ('KenKen','Plastic','Ken','kenken@gmail.com',to_date('98-03-21','YY-MM-DD'),'jaimebarbie','Membre');
+
+insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
+    values ('BarbieDoll','Doll','Barbie','barbie@gmail.com',to_date('99-8-8','YY-MM-DD'),'jaimeKen','Membre');
 
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
     values ('BobMod','Tremblay','Bob','bobmoderateur@quebingeton.com',to_date('90-03-03','YY-MM-DD'),'fG54pot*','Employé');    
@@ -288,10 +294,20 @@ create or replace view TP2_VUE_EMPLOYE (LOGIN_EMPLOYE, PRENOM_EMP, NOM_EMP, COUR
 
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
-    values (NO_CRITIQUE_SEQ.nextval,1, 'MovieLover',to_date('20-01-03','YY-MM-DD'),10.0,'C''est trop triste... fuck');
+    values (NO_CRITIQUE_SEQ.nextval,1, 'MovieLover',to_date('20-01-03','YY-MM-DD'),10.0,'C''est trop triste...');
 
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
-    values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',9.0,'C''est vrai!!',5);
+    values (NO_CRITIQUE_SEQ.nextval,1, 'BobMod',null,'C''est vrai!!',5);
+    
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,1, 'KenKen',to_date('20-01-03','YY-MM-DD'),5,'Fuck j''aime pas les drames');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,1, 'BarbieDoll',8,'j''aime');
+    
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIRE_CRI,REPOND_A_NO_CRITIQUE) 
+    values (NO_CRITIQUE_SEQ.nextval,1, 'KenKen',null,'Allo',10);
+
 /*d)*/
 delete from TP2_HORAIRE_PLATEFORME
     where add_months(DATE_HEURE_HORP, 24) < sysdate;
@@ -412,27 +428,56 @@ update TP2_HORAIRE_CINEMA
 insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
     values('Cineplex Odeon Beauport', 1, to_date('2020-02-19', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-14', 'YYYY-MM-DD'));*/
 
-create or replace function FCT_COTE_MOYENNE_FILM_REA (P_I_TITRE_FIL varchar2,P_I_NO_REALISATEU number) return number
+create or replace function FCT_COTE_MOYENNE_FILM_REA (P_I_TITRE_FIL varchar2,P_I_NO_REALISATEUR number) return number
 is
     V_COTE_MOYENNE number (3,1);
 begin
-    DBMS_OUTPUT.PUT_LINE('hello');
+    select avg(COTE_CRI) 
+        into V_COTE_MOYENNE
+        from (TP2_OEUVRE natural join TP2_REALISATEUR_OEUVRE) natural join TP2_CRITIQUE
+        where NO_REALISATEUR = P_I_NO_REALISATEUR and TITRE_OEU = P_I_TITRE_FIL;
+    return V_COTE_MOYENNE;
 end FCT_COTE_MOYENNE_FILM_REA;
 /
 
+select FCT_COTE_MOYENNE_FILM_REA('Titanic',1) from DUAL;
+
 create or replace procedure SP_PURGER_HORAIRE(P_I_DATE date) 
 is
-    V_A number;
 begin
-    dbms_output.put_line('Pas de maison existante');
+    delete from TP2_HORAIRE_CHAINE
+        where DATE_HEURE_HORCH < P_I_DATE;
+    delete from TP2_HORAIRE_CINEMA
+        where DATE_DEBUT_HORC < P_I_DATE;
+    delete from TP2_HORAIRE_PLATEFORME
+        where DATE_HEURE_HORP < P_I_DATE;
 end SP_PURGER_HORAIRE;
 /
-    
+
+create or replace function FCT_GENERER_MOT_DE_PASSE (P_I_TAILLE_MDP number) return varchar2
+is
+    V_TAILLE_MDP number(4):= P_I_TAILLE_MDP;
+    V_POSSIBILITES constant char(62) := 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    V_MOT_DE_PASSE varchar2(12) := '';
+    V_CHARACTER_COURANT char(1); 
+begin
+    if P_I_TAILLE_MDP < 8 
+        then V_TAILLE_MDP := 8;
+    elsif P_I_TAILLE_MDP > 12 
+        then V_TAILLE_MDP := 12;
+    end if;
+    for iteration in 1 .. V_TAILLE_MDP
+        loop
+            V_CHARACTER_COURANT := substr(V_POSSIBILITES,dbms_random.value(1,62),1);
+            V_MOT_DE_PASSE := concat (V_MOT_DE_PASSE,V_CHARACTER_COURANT);
+        end loop;
+    return V_MOT_DE_PASSE;
+end FCT_GENERER_MOT_DE_PASSE;
+/
+select FCT_GENERER_MOT_DE_PASSE (4) from dual;
+
+
 /* 
-b) Donnez la requête SQL qui crée une fonction nommée FCT_COTE_MOYENNE_FILM_REAL qui reçoit en
-paramètre un titre de film et un no de réalisateur et retourne la moyenne des cotes du film de ce réalisateur.
-c) Donnez la requête SQL qui crée une procédure stockée nommée SP_PURGER_HORAIRE qui reçoit en
-paramètre une date et efface toutes les horaires (tous les types), dont la date de début est avant cette date.
 d) Donnez la requête SQL qui crée une fonction nommée FCT_GENERER_MOT_DE_PASSE qui a comme
 paramètre un entier entre 8 et 12 représentants le nombre ds caractères du mot de passe. Si le nombre est
 passé est inférieur à 8, alors la fonction utilise 8. Si c'est plus grand que 12, la fonction utilise 12. La fonction
