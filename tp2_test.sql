@@ -94,6 +94,7 @@ create table TP2_ACTEUR (
     NOM_ACT varchar2(30) not null,
     PRENOM_ACT varchar2(30) not null,
     DATE_NAISSANCE_ACT date not null,
+    COURRIEL_ACT varchar2(30) not null,
     constraint PK_ACTEUR primary key (NO_ACTEUR) 
 );
 
@@ -110,7 +111,7 @@ create table TP2_UTILISATEUR (
     LOGIN_UTILISATEUR varchar2(10)not null, /*A VERIFIER*/
     NOM_UTI varchar2(30) not null,
     PRENOM_UTI varchar2(30) not null,
-    COURRIEL_UTI varchar2(30) null,
+    COURRIEL_UTI varchar2(30) not null,
     DATE_NAISSANCE_UTI date not null,
     MOT_DE_PASSE_UTI varchar2(15) not null, /*A verifier*/
     TYPE_UTI varchar2(30) default 'Utilisateur' not null,
@@ -256,11 +257,11 @@ insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MN
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Laval', 'Adulte', 'Avant-midi', 11.99);
 
-insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
-    values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'));
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT, COURRIEL_ACT)
+    values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'), 'LeoDiCaprio74@gmail.com');
 
-insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT)
-    values ('Phoenix','Joaquin',to_date('74-10-28','YY-MM-DD'));
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT, COURRIEL_ACT)
+    values ('Phoenix','Joaquin',to_date('74-10-28','YY-MM-DD'), 'PhoenixJoaquin74@hotmail.com');
 
 insert into TP2_ROLE_OEUVRE (NO_OEUVRE, PERSONNAGE, NO_ACTEUR)
     values (1,'Jack Dawson',1);
@@ -361,7 +362,7 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
 /*c)*/
 
 insert into TP2_UTILISATEUR(LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI, DATE_NAISSANCE_UTI, MOT_DE_PASSE_UTI, TYPE_UTI)
-    select substr(PRENOM_ACT,1,3) || substr(NOM_ACT,1,2) || floor(dbms_random.value(1,100)), NOM_ACT, PRENOM_ACT, null,
+    select substr(PRENOM_ACT,1,3) || substr(NOM_ACT,1,2) || floor(dbms_random.value(1,100)), NOM_ACT, PRENOM_ACT, COURRIEL_ACT,
     DATE_NAISSANCE_ACT, '123', 'Acteur'
         from TP2_ACTEUR;
 
@@ -379,24 +380,38 @@ col CHEMIN format a40
 select *
     from TP2_VUE_CRITIQUE;
     
-create or replace trigger TRG_AUI_HORAIRE_CINEMA
-    after update or insert on TP2_HORAIRE_CINEMA for each row
+/* 2) a) */
+    
+create or replace trigger TRG_AIU_DATE_HORC_FILM
+    after insert or update of DATE_DEBUT_HORC, DATE_FIN_HORC on TP2_HORAIRE_CINEMA
+
 declare
-    cursor HORAIRE_CINEMA_CURSEUR is
-        select DATE_DEBUT_HORC, DATE_FIN_HORC
-        from TP2_HORAIRE_CINEMA
-        where NO_OEUVRE = :NEW.NO_OEUVRE;
+    V_NB_ERREUR number;
+    
 begin
-    for HEURES_ENREGISTREMENT in HORAIRE_CINEMA_CURSEUR
-    loop
-        if not (  HEURES_ENREGISTREMENT.DATE_FIN_HORC <=:NEW.DATE_DEBUT_HORC 
-        or HEURES_ENREGISTREMENT.DATE_DEBUT_HORC >= :NEW.DATE_FIN_HORC)
-        then raise_application_error(-20032,'message');
-        end if;
-    end loop;
-end TRG_AUI_HORAIRE_CINEMA;
+    select count(A.NO_OEUVRE) into V_NB_ERREUR
+        from TP2_HORAIRE_CINEMA A, TP2_HORAIRE_CINEMA B
+            where (A.NOM_CINEMA = B.NOM_CINEMA and A.NO_OEUVRE = B.NO_OEUVRE and (A.DATE_DEBUT_HORC <> B.DATE_DEBUT_HORC or A.DATE_FIN_HORC <> B.DATE_FIN_HORC) and
+            (A.DATE_DEBUT_HORC between B.DATE_DEBUT_HORC and B.DATE_FIN_HORC or A.DATE_FIN_HORC between B.DATE_DEBUT_HORC and B.DATE_FIN_HORC));
+            
+    if V_NB_ERREUR > 0 then
+        raise_application_error(-20056, 'Il ne peut pas y avoir de chevauchement d' || '''horaire pour un même film au même cinéma');
+    end if;
+
+end TRG_AIU_DATE_HORC_FILM;
 /
-/*************************************************************/
+
+/* Requetes de validation pour la 2) a)
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Cineplex Odeon Beauport', 1, to_date('2020-04-18', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-06-02', 'YYYY-MM-DD'));
+    
+update TP2_HORAIRE_CINEMA
+    set DATE_DEBUT_HORC = to_date('2020-02-17', 'YYYY-MM-DD')
+        where DATE_DEBUT_HORC = '2020-04-18';
+        
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Cineplex Odeon Beauport', 1, to_date('2020-02-19', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-14', 'YYYY-MM-DD'));*/
+
 create or replace function FCT_COTE_MOYENNE_FILM_REA (P_I_TITRE_FIL varchar2,P_I_NO_REALISATEU number) return number
 is
     V_COTE_MOYENNE number (3,1);
@@ -404,7 +419,7 @@ begin
     DBMS_OUTPUT.PUT_LINE('hello');
 end FCT_COTE_MOYENNE_FILM_REA;
 /
-/*************************************************************/
+
 create or replace procedure SP_PURGER_HORAIRE(P_I_DATE date) 
 is
     V_A number;
@@ -412,4 +427,15 @@ begin
     dbms_output.put_line('Pas de maison existante');
 end SP_PURGER_HORAIRE;
 /
-/*************************************************************/    
+    
+/* 
+b) Donnez la requête SQL qui crée une fonction nommée FCT_COTE_MOYENNE_FILM_REAL qui reçoit en
+paramètre un titre de film et un no de réalisateur et retourne la moyenne des cotes du film de ce réalisateur.
+c) Donnez la requête SQL qui crée une procédure stockée nommée SP_PURGER_HORAIRE qui reçoit en
+paramètre une date et efface toutes les horaires (tous les types), dont la date de début est avant cette date.
+d) Donnez la requête SQL qui crée une fonction nommée FCT_GENERER_MOT_DE_PASSE qui a comme
+paramètre un entier entre 8 et 12 représentants le nombre ds caractères du mot de passe. Si le nombre est
+passé est inférieur à 8, alors la fonction utilise 8. Si c'est plus grand que 12, la fonction utilise 12. La fonction
+génère et retourne un mot de passe alphanumérique du nombre de caractères passé en paramètre. Vous
+devez programmer vous-mêmes cette génération. */ 
+    
