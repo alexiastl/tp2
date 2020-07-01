@@ -564,7 +564,38 @@ insert into TP2_UTILISATEUR(LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI
 /******************************************************************************************************************************
                                         PARTIE 3 : INDEXATION ET AMÉLIORATION DES PERFORMANCES
 ******************************************************************************************************************************/
-    
+ 
+/*________________________________________________
+3)a) Amélioration des performances par l'indexation
+________________________________________________*/
+
+/* Nous avons créé un index sur le champ TITRE_OEU car celui-ci est fréquemment utilisé lors des recherches. 
+De plus, ce champ est rarement mis à jour et il retourne que très peu de tuples puisque peu de films portent exactement 
+les mêmes noms.
+
+Nous avons également créé un index composite sur les champs (TITRE_OEU, ANNEE_OEU) car il arrive souvent qu’un utilisateur 
+souhaite effectuer une recherche sur le titre et l’année de l’oeuvre. Une telle recherche ne retourne que très peu de résultat 
+et dans certaines requêtes, il est davantage rapide pour le SGBD d’utiliser l’index composite plutôt qu’un index sur un seul 
+champ. Aussi, ces champs sont rarement mis à jour.
+
+En ce qui concerne le dernier index que nous avons créé, il s’agit du même que le précédent, mais les champs sont inversés 
+(ANNEE_OEU, TITRE_OEU). Tout comme les autres index, il y a beaucoup de recherches qui se font sur ces champs. 
+Aussi, ces champs sont rarement mis à jour. De plus, il n’y a que très peu d’enregistrements qui seront retournés. 
+En somme, il possède les mêmes avantages que les deux autres index créés précédemment.
+
+Nous n’avons pas choisis la durée comme index, car en général la durée d’un film se situe entre 90 et 150 minutes 
+(avec quelques exceptions). Ce ne serait pas suffisant pour améliorer la performance car pour une durée donnée il y aurait tout 
+de même une grande quantité de films associés à celle-ci.
+
+Nous n’avons pas créé index sur le genre. Puisqu’il existe que très peu de genre (seulement 5), les index risquent 
+de ne pas améliorer les performances, mais au contraire, de les ralentir. Il y aurait également trop de tuples dans 
+chacun des index.
+
+Finalement, nous avons vu que choisir une longue chaîne de caractères comme index n’était généralement pas un bon choix. 
+Puisque nous avons défini SYNOPSIS_OEU comme pouvant contenir jusqu’à 500 caractères, cet attribut nécessite un bon espace 
+de stockage, et l’utiliser comme index serait lourd en calcul.
+
+*/   
 create index IDX_OEUVRE_TITRE_OEU
     on TP2_OEUVRE(TITRE_OEU);
 
@@ -574,6 +605,9 @@ create index IDX_OEUVRE_TITRE_ANNEE_OEU
 create index IDX_OEUVRE_ANNEE_TITRE_OEU
     on TP2_OEUVRE(ANNEE_OEU, TITRE_OEU);
 
+/*________________________________________________
+3)a) Amélioration des performances par la dénormalisation
+________________________________________________*/
 
 /*Grâce à la méthode 7.7 (Partitioner des relations), nous avons dénormalisé la table TP2_OEUVRE en copiant NO_OEUVRE et en
 collant SYNOPSIS_OEU dans une nouvelle relation nommée TP2_OEUVRE_SYNOPSIS. Nous avons effectué cette partition verticale afin
