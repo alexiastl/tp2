@@ -600,7 +600,7 @@ create or replace trigger TRG_AI_TP2_OEUVRE
 declare
     V_SYNOPSIS varchar2(500);
 begin
-    V_SYNOPSIS := '&Synopsis';
+    V_SYNOPSIS := 'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.';
     insert into TP2_OEUVRE_SYNOPSIS(NO_OEUVRE, SYNOPSIS_OEU)
         values (:new.NO_OEUVRE, V_SYNOPSIS);
 end TRG_AI_TP2_OEUVRE;
