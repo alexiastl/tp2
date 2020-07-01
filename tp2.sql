@@ -16,6 +16,7 @@ drop table TP2_UTILISATEUR cascade constraints;
 drop table TP2_CRITIQUE cascade constraints;
 drop sequence NO_CRITIQUE_SEQ;
 
+
 /******************************************************************************************************************************
                                         PARTIE 1 : SQL
 ******************************************************************************************************************************/
@@ -573,8 +574,38 @@ create index IDX_OEUVRE_TITRE_ANNEE_OEU
 create index IDX_OEUVRE_ANNEE_TITRE_OEU
     on TP2_OEUVRE(ANNEE_OEU, TITRE_OEU);
 
-create index IDX_OEUVRE_GENRE_OEU
-    on TP2_OEUVRE(GENRE_OEU);
+
+/*Grâce à la méthode 7.7 (Partitioner des relations), nous avons dénormalisé la table TP2_OEUVRE en copiant NO_OEUVRE et en
+collant SYNOPSIS_OEU dans une nouvelle relation nommée TP2_OEUVRE_SYNOPSIS. Nous avons effectué cette partition verticale afin
+de réduire le temps de recherche sur la table TP2_OEUVRE car le synopsis n'est pas un attribut qui est souvent rechercé. 
+De plus, comme l'attribut SYNOPSIS_OEU est très gros, les gains seront significatifs sur la table TP2_OEUVRE.*/
+
+drop table TP2_OEUVRE_SYNOPSIS cascade constraints;
+
+create table TP2_OEUVRE_SYNOPSIS(
+    NO_OEUVRE number(6,0) not null,
+    SYNOPSIS_OEU varchar2(500) not null,
+    constraint FK_OEU_NO_OEUVRE foreign key (NO_OEUVRE) references TP2_OEUVRE(NO_OEUVRE) on delete cascade);
+    
+insert into TP2_OEUVRE_SYNOPSIS(NO_OEUVRE, SYNOPSIS_OEU)
+    select NO_OEUVRE, SYNOPSIS_OEU
+        from TP2_OEUVRE;
+    
+alter table TP2_OEUVRE
+    drop column SYNOPSIS_OEU;  
+    
+create or replace trigger TRG_AI_TP2_OEUVRE
+    after insert on TP2_OEUVRE
+    for each row
+declare
+    V_SYNOPSIS varchar2(500);
+begin
+    V_SYNOPSIS := '&Synopsis';
+    insert into TP2_OEUVRE_SYNOPSIS(NO_OEUVRE, SYNOPSIS_OEU)
+        values (:new.NO_OEUVRE, V_SYNOPSIS);
+end TRG_AI_TP2_OEUVRE;
+/    
+                
   
 /* Nous avons dénormalisé la table TP2_HORAIRE_PLATEFORME en utilisant 7.4. Elle faisait partit d'une assotiation *:* 
 entre la table TP2_OEUVRE et la table TP2_CHAINE.*/    
