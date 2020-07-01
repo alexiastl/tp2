@@ -592,11 +592,7 @@ insert into TP2_OEUVRE_SYNOPSIS(NO_OEUVRE, SYNOPSIS_OEU)
         from TP2_OEUVRE;
     
 alter table TP2_OEUVRE
-    drop column SYNOPSIS_OEU;
-    
-select * from TP2_OEUVRE
-    where NO_OEUVRE = '&NO_OEUVRE';
-    
+    drop column SYNOPSIS_OEU;  
     
 create or replace trigger TRG_AI_TP2_OEUVRE
     after insert on TP2_OEUVRE
@@ -608,6 +604,5 @@ begin
     insert into TP2_OEUVRE_SYNOPSIS(NO_OEUVRE, SYNOPSIS_OEU)
         values (:new.NO_OEUVRE, V_SYNOPSIS);
 end TRG_AI_TP2_OEUVRE;
-/
-                    
+/    
                 
