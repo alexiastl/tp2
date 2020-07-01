@@ -465,7 +465,7 @@ begin
     end if;
 
 end TRG_AIU_DATE_HORC_FILM;
-
+/
 /*________________________________________________
 2)b) 
 Requête SQL qui crée une fonction nommée FCT_COTE_MOYENNE_FILM_REAL, 
@@ -575,3 +575,44 @@ create index IDX_OEUVRE_ANNEE_TITRE_OEU
 
 create index IDX_OEUVRE_GENRE_OEU
     on TP2_OEUVRE(GENRE_OEU);
+  
+/* Nous avons dénormalisé la table TP2_HORAIRE_PLATEFORME en utilisant 7.4. Elle faisait partit d'une assotiation *:* 
+entre la table TP2_OEUVRE et la table TP2_CHAINE.*/    
+alter table TP2_HORAIRE_PLATEFORME add TITRE_HORC varchar2(30) null;  
+alter table TP2_HORAIRE_PLATEFORME add SYNOPSIS_HORC varchar2(500) null;
+
+
+update TP2_HORAIRE_PLATEFORME HP 
+    set HP.SYNOPSIS_HORC =  (select SYNOPSIS_OEU 
+                            from TP2_OEUVRE O
+                            where O.NO_OEUVRE = HP.NO_OEUVRE),
+    HP.TITRE_HORC = (select TITRE_OEU 
+                    from TP2_OEUVRE O
+                    where O.NO_OEUVRE = HP.NO_OEUVRE);
+
+create or replace trigger TRG_AIU_SYNOPSIS_TITRE_OEUVRE
+    after insert or update of SYNOPSIS_OEU, TITRE_OEU on TP2_OEUVRE
+    for each row
+declare
+    V_NB_ERREUR number;
+    
+begin
+    update TP2_HORAIRE_PLATEFORME HP 
+    set HP.SYNOPSIS_HORC =  (:NEW.SYNOPSIS_OEU),
+    HP.TITRE_HORC = (:NEW.TITRE_OEU)
+    where HP.NO_OEUVRE = :NEW.NO_OEUVRE;
+end TRG_AIU_SYNOPSIS_TITRE_OEUVRE;
+
+create or replace trigger TRG_AIU_SYNOPSIS_TITRE_OEUVRE
+    after insert or update of SYNOPSIS_OEU, TITRE_OEU on TP2_OEUVRE
+    for each row
+declare
+    V_NB_ERREUR number;
+    
+begin
+    update TP2_HORAIRE_PLATEFORME HP 
+    set HP.SYNOPSIS_HORC =  (:NEW.SYNOPSIS_OEU),
+    HP.TITRE_HORC = (:NEW.TITRE_OEU)
+    where HP.NO_OEUVRE = :NEW.NO_OEUVRE;
+end TRG_AIU_SYNOPSIS_TITRE_OEUVRE;
+
