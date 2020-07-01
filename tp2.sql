@@ -128,10 +128,10 @@ create table TP2_UTILISATEUR (
     constraint AK_COURRIEL_UTI unique (COURRIEL_UTI)
 );
 
-/* Pour cette table, nous avons faits des suppositions qui en temps normal, auraient étés implémentés avec des contraines
+/* Pour cette table, nous avons faits des suppositions qui en temps normal, auraient étés implémentées avec des contraines
 check :
 Puisque ici, un membre est en mesure de commenter plus d'une fois, nous allons supposer plus tard dans nos insertions,
-qu'un membre va voter une seule fois, soit dans un commentaire 'parent'. De plus on suppose qu'un membre peut voter
+qu'un membre va voter une seule fois, soit dans un commentaire 'racine'. De plus on suppose qu'un membre peut voter
 mais laisser un commentaire 'vide', nous mettons la valeur d'un commentaire vide à ' ', mais supponsons qu'un commentaire 
 étant une réponse à un autre commentaire ne sera pas vide.*/
 create table TP2_CRITIQUE(
@@ -225,10 +225,10 @@ insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
     
 /*Insertions dans TP2_REALISATEUR_OEUVRE : */
 insert into TP2_REALISATEUR_OEUVRE 
-    VALUES(1,1);
+    values(1,1);
     
 insert into TP2_REALISATEUR_OEUVRE 
-    VALUES(2,2);
+    values(2,2);
 
 /*Insertions dans TP2_PLATEFORNE : */
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
@@ -339,7 +339,7 @@ insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,REPOND_A_N
 
 /*________________________________________________
 1)d) à j) 
-Reqêtes d'insertions pour chacune des tables
+Requêtes d'insertions pour chacune des tables
 La requête c) se retrouvera dans la section PL/SQL.
 ________________________________________________*/
 
@@ -372,7 +372,7 @@ select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
 /*g)j)*/
 select  NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
     from (TP2_HORAIRE_CHAINE join TP2_CHAINE  using (NOM_CHAINE)) join TP2_OEUVRE using (NO_OEUVRE)
-    where TITRE_OEU = 'Cadavres à tous les clics' and DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD');
+        where TITRE_OEU = 'Cadavres à tous les clics' and DATE_HEURE_HORCH > to_date('2019-11-30','YYYY-MM-DD');
 
 /*g)k)*/
 select NOM_CHAINE, COMPAGNIE_CHA, URL_CHA
@@ -539,8 +539,8 @@ end FCT_GENERER_MOT_DE_PASSE;
 Cette fonction permet de trouver la moyenne des côtes des films par 
 genre et année d'oeuvre. Cela permettrait à Quebingeton d'améliorer 
 son chiffre d'affaire car il pourrait facilement évaluer la tendance de 
-quelles sont les genres qui font fureurs et lesquels ne plaisent pas à ses 
-spectateurs. De ce fait, Quebingetonpourrait mettre davantage d'emphase 
+quels sont les genres qui font fureurs et lesquels ne plaisent pas à ses 
+spectateurs. De ce fait, Quebingeton pourrait mettre davantage d'emphase 
 sur l'acquisition des genres les plus populaires.
 ________________________________________________*/
 create or replace function FCT_COTE_MOYENNE_FILM_GENRE (P_I_GENRE_OEU varchar2, P_I_ANNEE_OEU number) return number
@@ -578,7 +578,7 @@ create index IDX_OEUVRE_ANNEE_TITRE_OEU
 /*Grâce à la méthode 7.7 (Partitioner des relations), nous avons dénormalisé la table TP2_OEUVRE en copiant NO_OEUVRE et en
 collant SYNOPSIS_OEU dans une nouvelle relation nommée TP2_OEUVRE_SYNOPSIS. Nous avons effectué cette partition verticale afin
 de réduire le temps de recherche sur la table TP2_OEUVRE car le synopsis n'est pas un attribut qui est souvent rechercé. 
-De plus, comme l'attribut SYNOPSIS_OEU est très gros, les gains seront significatifs sur la table TP2_OEUVRE.*/
+De plus, comme l'attribut SYNOPSIS_OEU est très volumineux, les gains seront significatifs sur la table TP2_OEUVRE.*/
 
 drop table TP2_OEUVRE_SYNOPSIS cascade constraints;
 
@@ -606,9 +606,9 @@ begin
 end TRG_AI_TP2_OEUVRE;
 /    
 
-/* Pour la seconde technique de dénormalisation nous avons choisis de faire
+/* Pour la seconde technique de dénormalisation nous avons choisi de faire
 la 7.2.2, soit dupliquer des attributs non-clés dans une association 1:*. Les
-tables TP2_OEUVRE et TP2_HORAIRE_PLATEFORME avait ce type d'association. Nous avons
+tables TP2_OEUVRE et TP2_HORAIRE_PLATEFORME avaient ce type d'association. Nous avons
 copié les attributs ANNEE_OEU et TITRE_OEU dans la table TP2_HORAIRE_CHAINE, puisque
 ce sont 2 informations très consultées lorsqu'un utlisateur consulte l'horaire
 d'une oeuvre. De cette façon on accélère la consultation d'horaire*/
