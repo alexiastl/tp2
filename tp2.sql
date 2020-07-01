@@ -605,45 +605,49 @@ begin
         values (:new.NO_OEUVRE, V_SYNOPSIS);
 end TRG_AI_TP2_OEUVRE;
 /    
-                
-  
-/* Nous avons dénormalisé la table TP2_HORAIRE_PLATEFORME en utilisant 7.4. Elle faisait partit d'une assotiation *:* 
-entre la table TP2_OEUVRE et la table TP2_CHAINE.*/    
-alter table TP2_HORAIRE_PLATEFORME add TITRE_HORC varchar2(30) null;  
-alter table TP2_HORAIRE_PLATEFORME add SYNOPSIS_HORC varchar2(500) null;
 
+/* Pour la seconde technique de dénormalisation nous avons choisis de faire
+la 7.2.2, soit dupliquer des attributs non-clés dans une association 1:*. Les
+tables TP2_OEUVRE et TP2_HORAIRE_PLATEFORME avait ce type d'association. Nous avons
+copié les attributs ANNEE_OEU et TITRE_OEU dans la table TP2_HORAIRE_CHAINE, puisque
+ce sont 2 informations très consultées lorsqu'un utlisateur consulte l'horaire
+d'une oeuvre. De cette façon on accélère la consultation d'horaire*/
+alter table TP2_HORAIRE_PLATEFORME add TITRE_HORP varchar2(30) null;  
+alter table TP2_HORAIRE_PLATEFORME add ANNEE_SORTIE_HORP number(4) null;                
+
+create or replace trigger TRG_AU_ANNEE_TITRE_OEUVRE
+    after update of ANNEE_OEU, TITRE_OEU on TP2_OEUVRE
+    for each row
+begin
+    update TP2_HORAIRE_PLATEFORME HP 
+        set HP.ANNEE_SORTIE_HORP =  (:NEW.ANNEE_OEU),
+        HP.TITRE_HORP = (:NEW.TITRE_OEU)
+        where HP.NO_OEUVRE = :NEW.NO_OEUVRE;
+end TRG_AU_SYNOPSIS_TITRE_OEUVRE;
+/
 
 update TP2_HORAIRE_PLATEFORME HP 
-    set HP.SYNOPSIS_HORC =  (select SYNOPSIS_OEU 
+    set HP.ANNEE_SORTIE_HORP =  (select ANNEE_OEU 
                             from TP2_OEUVRE O
                             where O.NO_OEUVRE = HP.NO_OEUVRE),
-    HP.TITRE_HORC = (select TITRE_OEU 
+    HP.TITRE_HORP = (select TITRE_OEU 
                     from TP2_OEUVRE O
                     where O.NO_OEUVRE = HP.NO_OEUVRE);
 
-create or replace trigger TRG_AIU_SYNOPSIS_TITRE_OEUVRE
-    after insert or update of SYNOPSIS_OEU, TITRE_OEU on TP2_OEUVRE
+create or replace trigger TRG_AIU_HORAIRE_PLATEFORME
+    after insert or update of ANNEE_SORTIE_HORP, TITRE_HORP on TP2_HORAIRE_PLATEFORME
     for each row
 declare
-    V_NB_ERREUR number;
-    
+    V_TITRE_OEU  varchar2(30) ;
+    V_ANNEE_OEU  number(4);
 begin
-    update TP2_HORAIRE_PLATEFORME HP 
-    set HP.SYNOPSIS_HORC =  (:NEW.SYNOPSIS_OEU),
-    HP.TITRE_HORC = (:NEW.TITRE_OEU)
-    where HP.NO_OEUVRE = :NEW.NO_OEUVRE;
+    select TITRE_OEU, ANNEE_OEU
+        into V_TITRE_OEU, V_ANNEE_OEU
+        from TP2_OEUVRE O
+        where O.NO_OEUVRE = :NEW.NO_OEUVRE;
+    if not ((V_TITRE_OEU = :NEW.TITRE_HORP ) and (V_ANNEE_OEU = :NEW.ANNEE_SORTIE_HORP))
+        then raise_application_error(-20054,'Les informations rentrées sur le titre et la date ne 
+        correspondent pas au numéro de film');
+    end if;
 end TRG_AIU_SYNOPSIS_TITRE_OEUVRE;
-
-create or replace trigger TRG_AIU_SYNOPSIS_TITRE_OEUVRE
-    after insert or update of SYNOPSIS_OEU, TITRE_OEU on TP2_OEUVRE
-    for each row
-declare
-    V_NB_ERREUR number;
-    
-begin
-    update TP2_HORAIRE_PLATEFORME HP 
-    set HP.SYNOPSIS_HORC =  (:NEW.SYNOPSIS_OEU),
-    HP.TITRE_HORC = (:NEW.TITRE_OEU)
-    where HP.NO_OEUVRE = :NEW.NO_OEUVRE;
-end TRG_AIU_SYNOPSIS_TITRE_OEUVRE;
-
+/
