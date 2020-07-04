@@ -371,3 +371,20 @@ begin
         where DATE_HEURE_HORP < P_I_DATE;
 end SP_PURGER_HORAIRE;
 /
+
+alter table TP2_OEUVRE
+    add CHEMIN_IMAGE_OEUVRE varchar2(100);
+
+create or replace procedure TP3_SP_PURGER_HORAIRE is 
+    V_DATE date := sysdate - 182;
+begin
+
+    delete from TP2_HORAIRE_CHAINE
+        where DATE_HEURE_HORCH < V_DATE;
+    delete from TP2_HORAIRE_CINEMA
+        where DATE_DEBUT_HORC < V_DATE;
+    delete from TP2_HORAIRE_PLATEFORME
+        where DATE_HEURE_HORP < V_DATE;
+end TP3_SP_PURGER_HORAIRE;
+/
+execute TP3_SP_PURGER_HORAIRE;
