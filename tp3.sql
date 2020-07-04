@@ -318,18 +318,44 @@ insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU
     'films/hg31');
     
 /*Insertions dans TP2_REALISATEUR : */
-insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
-    values ('Cameron','James');
-    
-insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
-    values ('Phillips','Todd');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Cameron','James');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Phillips','Todd');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Singer','Eric');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Russell','David');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Cohen','Rob');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Singleton','John');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Li','Justin');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Columbus','Chris');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Cuaron','Alfonson');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Newell','Mike');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Yates','David');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Ross','Gary');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Lawrence','Francis');
+insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA) values ('Scott','Silver');
     
 /*Insertions dans TP2_REALISATEUR_OEUVRE : */
-insert into TP2_REALISATEUR_OEUVRE 
-    values(1,1);
-    
-insert into TP2_REALISATEUR_OEUVRE 
-    values(2,2);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (1,1);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (2,2);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (2,14);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (3,1);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (4,4);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (4,3);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (5,4);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (6,4);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (7,5);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (8,6);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (9,7);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (10,8);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (11,8);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (12,9);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (13,10);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (14,11);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (15,11);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (16,11);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (17,11);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (18,12);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (19,13);
+insert into TP2_REALISATEUR_OEUVRE (NO_OEUVRE, NO_REALISATEUR) values (20,13);
 
 /*Insertions dans TP2_PLATEFORNE : */
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
@@ -343,11 +369,23 @@ insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
 
 /*Insertions dans TP2_HORAIRE_PLATEFORNE : */    
 insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
-    values('Netflix', 1, to_date('2018-05-22 19:30', 'YYYY-MM-DD HH24:MI'));
+    values('Netflix', 15, to_date('2019-08-01 19:30', 'YYYY-MM-DD HH24:MI'));
     
 insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
-    values('HBO', 2, to_date('2020-03-13 12:30', 'YYYY-MM-DD HH24:MI'));
+    values('Netflix', 7, to_date('2020-07-27 12:30', 'YYYY-MM-DD HH24:MI'));
 
+insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
+    values('HBO', 12, to_date('2021-06-11 19:30', 'YYYY-MM-DD HH24:MI'));
+    
+insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
+    values('HBO', 8, to_date('2020-10-12 12:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
+    values('Amazon Prime', 4, to_date('2019-09-23 19:30', 'YYYY-MM-DD HH24:MI'));
+    
+insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
+    values('Amazon Prime', 19, to_date('2020-08-25 12:30', 'YYYY-MM-DD HH24:MI'));
+    
 /*Insertions dans TP2_CHAINE : */    
 insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
     values('TVA', 'Groupe TVA', 'http://www.tva.ca');
@@ -360,16 +398,22 @@ insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
 
 /*Insertions dans TP2_HORAIRE_CHAINE : */     
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
-    values('TVA', 1, to_date('2018-05-17 12:30', 'YYYY-MM-DD HH24:MI'));
+    values('TVA', 12, to_date('2018-05-17 12:30', 'YYYY-MM-DD HH24:MI'));
     
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
-    values('VRAK', 2, to_date('2020-06-17 18:45', 'YYYY-MM-DD HH24:MI'));
+    values('VRAK', 5, to_date('2020-06-17 18:45', 'YYYY-MM-DD HH24:MI'));
 
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
-    values('TVA', 3, to_date('2019-12-12 12:30', 'YYYY-MM-DD HH24:MI'));
+    values('TVA', 19, to_date('2019-12-12 12:30', 'YYYY-MM-DD HH24:MI'));
     
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
-    values('VRAK', 3, to_date('2017-07-30 18:45', 'YYYY-MM-DD HH24:MI'));
+    values('VRAK', 1, to_date('2017-07-30 18:45', 'YYYY-MM-DD HH24:MI'));
+
+insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
+    values('Série Plus', 19, to_date('2020-11-29 12:30', 'YYYY-MM-DD HH24:MI'));
+    
+insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
+    values('Série Plus', 1, to_date('2021-02-27 18:45', 'YYYY-MM-DD HH24:MI'));
 
 /*Insertions dans TP2_CINEMA : */ 
 insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
@@ -383,11 +427,23 @@ insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_
 
 /*Insertions dans TP2_HORAIRE_CINEMA : */    
 insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
-    values('Cineplex Odeon Beauport', 1, to_date('2020-01-17', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-02', 'YYYY-MM-DD'));
+    values('Cineplex Odeon Beauport', 12, to_date('2020-01-17', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-02', 'YYYY-MM-DD'));
     
 insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
     values('Cineplex Laval', 2, to_date('2020-02-18', 'YYYY-MM-DD'), to_date('14:30', 'HH24:MI'), to_date('2020-04-08', 'YYYY-MM-DD'));
+
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Cineplex Odeon Beauport', 14, to_date('2020-01-17', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-02', 'YYYY-MM-DD'));
     
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Cineplex Laval', 20, to_date('2020-02-18', 'YYYY-MM-DD'), to_date('14:30', 'HH24:MI'), to_date('2020-04-08', 'YYYY-MM-DD'));
+
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Le Clap Place Ste-Foy', 3, to_date('2020-09-30', 'YYYY-MM-DD'), to_date('11:30', 'HH24:MI'), to_date('2020-03-02', 'YYYY-MM-DD'));
+    
+insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
+    values('Le Clap Place Ste-Foy', 18, to_date('2020-11-11', 'YYYY-MM-DD'), to_date('14:30', 'HH24:MI'), to_date('2020-04-08', 'YYYY-MM-DD'));
+
 /*Insertions dans TP2_BILLET_CINEMA : */
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Odeon Beauport', 'Adulte', 'Après-midi', 11.99);
@@ -419,13 +475,124 @@ insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT, COURRIEL_ACT)
 
 insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT, COURRIEL_ACT)
     values ('Phoenix','Joaquin',to_date('74-10-28','YY-MM-DD'), 'PhoenixJoaquin74@hotmail.com');
+    
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Adams','Amy',to_date('1974-10-20','YYYY-MM-DD'),'AdamsAmy@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Zane','Billy',to_date('1966-02-24','YYYY-MM-DD'),'ZaneBilly@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Diesel','Vin',to_date('1967-07-18','YYYY-MM-DD'),'DieselVin@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Mendes','Eva',to_date('1974-03-05','YYYY-MM-DD'),'MendesEva@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Felton','Tom',to_date('1987-09-22','YYYY-MM-DD'),'FeltonTom@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Bates','Kathy',to_date('1948-06-28','YYYY-MM-DD'),'BatesKathy@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Beetz','Zazie',to_date('1991-06-01','YYYY-MM-DD'),'BeetzZazie@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Saldana','Zoe',to_date('1978-06-19','YYYY-MM-DD'),'SaldanaZoe@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Walker','Paul',to_date('1973-09-12','YYYY-MM-DD'),'WalkerPaul@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Hauser','Cole',to_date('1975-03-22','YYYY-MM-DD'),'HauserCole@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Black','Lucas',to_date('1982-11-29','YYYY-MM-DD'),'BlackLucas@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Watson','Emma',to_date('1990-04-15','YYYY-MM-DD'),'WatsonEmma@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Winslet','Kate',to_date('1975-10-05','YYYY-MM-DD'),'WinsletKate@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Lang','Stephen',to_date('1952-07-11','YYYY-MM-DD'),'LangStephen@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Weaver','Jacki',to_date('1947-05-25','YYYY-MM-DD'),'WeaverJacki@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Grint','Rupert',to_date('1988-08-24','YYYY-MM-DD'),'GrintRupert@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Renner','Jeremy',to_date('1971-01-07','YYYY-MM-DD'),'RennerJeremy@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Ramirez','Edgar',to_date('1977-03-25','YYYY-MM-DD'),'RamirezEdgar@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Gibson','Tyrese',to_date('1978-12-30','YYYY-MM-DD'),'GibsonTyrese@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Griffin','Nikki',to_date('1978-04-16','YYYY-MM-DD'),'GriffinNikki@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Goodman','Brian',to_date('1963-06-01','YYYY-MM-DD'),'GoodmanBrian@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Tucci','Stanley',to_date('1970-11-11','YYYY-MM-DD'),'TucciStanley@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Conroy','Frances',to_date('1953-03-15','YYYY-MM-DD'),'ConroyFrances@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Bale','Christian',to_date('1974-01-30','YYYY-MM-DD'),'BaleChristian@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('De Niro','Robert',to_date('1943-08-17','YYYY-MM-DD'),'DeNiroRobert@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Cooper','Bradley',to_date('1975-01-05','YYYY-MM-DD'),'CooperBradley@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Hemsworth','Liam',to_date('1990-01-13','YYYY-MM-DD'),'HemsworthLiam@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Shields','Willow',to_date('2000-06-01','YYYY-MM-DD'),'ShieldsWillow@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Worthington','Sam',to_date('1976-08-02','YYYY-MM-DD'),'WorthingtonSam@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Weaver','Sigourney',to_date('1949-10-08','YYYY-MM-DD'),'WeaverSigourney@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Brewster','Jordana',to_date('1980-04-26','YYYY-MM-DD'),'BrewsterJordana@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Ty Bryan','Zachery',to_date('1981-10-09','YYYY-MM-DD'),'TyBryanZachery@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Radcliffe','Daniel',to_date('1989-07-23','YYYY-MM-DD'),'RadcliffeDaniel@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Lawrence','Jennifer',to_date('1990-08-15','YYYY-MM-DD'),'LawrenceJennifer@gmail.com');
+insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT, DATE_NAISSANCE_ACT, COURRIEL_ACT) values('Rodriguez','Michelle',to_date('1978-07-12','YYYY-MM-DD'),'RodriguezMichelle@gmail.com');
 
 /*Insertions dans TP2_ROLE_OEUVRE : */
-insert into TP2_ROLE_OEUVRE (NO_OEUVRE, PERSONNAGE, NO_ACTEUR)
-    values (1,'Jack Dawson',1);
-    
-insert into TP2_ROLE_OEUVRE (NO_OEUVRE, PERSONNAGE, NO_ACTEUR)
-    values (2,'Arthur Fleck / Le Joker',2);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (4,'Sydney Prosser',3);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (4,'Irving Rosenfield',26);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (1,'Molly Brown',8);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (2,'Sophie Dumond',9);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (9,'Sean Boswell',13);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (7,'Mia Toretto',33);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (2,'Penny Fleck',25);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (4,'Richie DiMaso',28);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (5,'Pat',28);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (6,'Neil Walker',28);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (2,'Murray Franklin',27);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (5,'Pat Sr.',27);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (6,'Rudy',27);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (1,'Jack Dawson',1);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (7,'Dominic Toretto',5);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (10,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (11,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (12,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (13,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (14,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (15,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (16,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (17,'Draco Malfoy',7);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (8,'Romance Pearce',21);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (9,'Major Boswell',23);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (9,'Cindy',22);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (10,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (11,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (12,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (13,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (14,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (15,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (16,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (17,'Ron Wesley',18);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (8,'Carter Verone',12);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (18,'Gale Hawthorne',29);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (19,'Gale Hawthorne',29);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (20,'Gale Hawthorne',29);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (3,'Colonel Miles Quaritch',16);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (5,'Tiffany',36);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (6,'Joy',36);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (18,'Katniss Everdeen',36);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (19,'Katniss Everdeen',36);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (20,'Katniss Everdeen',36);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (8,'Monica Fuentes',6);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (2,'Arthur Fleck',2);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (10,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (11,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (12,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (13,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (14,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (15,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (16,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (17,'Harry Potter',35);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (6,'Tony',20);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (4,'Mayor Carmine Polito',19);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (7,'Letty',37);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (3,'Neytiri',10);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (18,'Primrose Everdeer',30);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (19,'Primrose Everdeer',30);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (20,'Primrose Everdeer',30);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (18,'Caesar Flickerman',24);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (19,'Caesar Flickerman',24);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (20,'Caesar Flickerman',24);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (9,'Clay',34);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (7,'Brian Conner',11);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (8,'Brian Conner',11);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (10,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (11,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (12,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (13,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (14,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (15,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (16,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (17,'Hermione Granger',14);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (5,'Dolores Solitano',17);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (3,'Dr. Grace Augustine',32);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (1,'Rose Dewitt Bukater',15);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (3,'Jake Sully',31);
+insert into TP2_ROLE_OEUVRE(NO_OEUVRE, PERSONNAGE, NO_ACTEUR) values (1,'Cal Hockley',4);
 
 /*Insertions dans TP2_UTILISATEUR : */
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
@@ -464,7 +631,68 @@ insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,COMMENTAIR
     
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,COTE_CRI,REPOND_A_NO_CRITIQUE) 
     values (NO_CRITIQUE_SEQ.nextval,1, 'KenKen',null,10);
-    
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,2, 'BarbieDoll',to_date('20-07-16','YY-MM-DD'),10.0,'Excellente performance de l''acteur!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,3, 'MrNet',to_date('20-01-03','YY-MM-DD'),04.0,'Le film est beaucoup trop long :(');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,4, 'EllenEmp',to_date('20-01-04','YY-MM-DD'),8.0,'J''aime bien les histoires vraies!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,5, 'MovieLover',to_date('20-01-01','YY-MM-DD'),9.0,'L''oscar était bien mérité');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,6, 'BarbieDoll',to_date('20-04-01','YY-MM-DD'),6.0,'Beau mais un peu ennuyeux');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,7, 'KenKen',to_date('20-03-12','YY-MM-DD'),10.0,'Trop bien! Vive les voitures <3');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,8, 'KenKen',to_date('20-02-15','YY-MM-DD'),9.2,'Je veux que ma vie ressemble à
+    ce film!!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,9, 'KenKen',to_date('19-11-23','YY-MM-DD'),9.7,'Rien de mieux que des courses
+    de voitures!!!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,10, 'MovieLover',to_date('20-02-25','YY-MM-DD'),8.5,'Très bien pour les enfants');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,11, 'MovieLover',to_date('19-03-23','YY-MM-DD'),7.8,'Le fin m''a fait un peu peur');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,12, 'MovieLover',to_date('20-04-08','YY-MM-DD'),10.0,'Définitivement mon préféré!!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,13, 'KarenEmp',to_date('20-04-09','YY-MM-DD'),9.0,'Cedric :''( ');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,14, 'BobMod',to_date('20-04-11','YY-MM-DD'),7.0,'Je déteste Bellatrix');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,15, 'MrNet',to_date('20-04-14','YY-MM-DD'),8.0,'Enfin, on commence à mieux comprendre!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,16, 'BarbieDoll',to_date('20-04-26','YY-MM-DD'),10.0,'Un des meilleurs films!!!');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,17, 'BarbieDoll',to_date('20-04-27','YY-MM-DD'),10.0,'Je peux pas croire que ce soit déjà
+    le dernier film... snif');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,18, 'MrNet',to_date('20-05-14','YY-MM-DD'),8.7,'J''adore le concept');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,19, 'MrNet',to_date('20-07-06','YY-MM-DD'),9.5,'L''arène est très bien pensée');
+
+insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
+    values (NO_CRITIQUE_SEQ.nextval,20, 'MrNet',to_date('20-07-16','YY-MM-DD'),5.0,'Il manque un peu d''action comparé aux 
+    autres...');
+
 create or replace procedure SP_PURGER_HORAIRE(P_I_DATE date) 
 is
 begin
