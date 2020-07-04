@@ -192,9 +192,25 @@ insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU
         122,'12+','DC FIlms');
 
 insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
-    values ('Cadavres à tous les clics',2019,'thriller','Plusieurs membres du site Quebingeton sont décédés de façon
-    suspecte.',
-        96,'18+','Horror Studio');
+    values ('Avatar',2009,'science-fiction',
+        'Malgré sa paralysie, Jake Sully, un ancien marine immobilisé dans un fauteuil roulant, est resté un combattant au 
+        plus profond de son être. Il est recruté pour se rendre à des années-lumière de la Terre, sur Pandora, où de puissants 
+        groupes industriels exploitent un minerai rarissime destiné à résoudre la crise énergétique sur Terre. Parce que 
+        l''atmosphère de Pandora est toxique pour les humains, ceux-ci ont créé le Programme Avatar, qui permet à des 
+        " pilotes " humains de lier leur esprit à un avatar, un corps biologique commandé à distance, capable de survivre dans 
+        cette atmosphère létale. Ces avatars sont des hybrides créés génétiquement en croisant l''ADN humain avec celui des 
+        Na''vi, les autochtones de Pandora.Sous sa forme d''avatar, Jake peut de nouveau marcher. On lui confie une mission 
+        d''infiltration auprès des Na''vi, devenus un obstacle trop conséquent à l''exploitation du précieux minerai. Mais tout 
+        va changer lorsque Neytiri, une très belle Na''vi, sauve la vie de Jake...',
+        162,'G','20th Century Fox');
+
+insert into TP2_OEUVRE( TITRE_OEU, ANNEE_OEU, GENRE_OEU, SYNOPSIS_OEU, DUREE_OEU, CLASSEMENT_OEU, COMPAGNIE_OEU) 
+    values ('Avatar',2009,'science-fiction',
+        'Le film, qui relate une histoire originale inédite sur grand écran, se focalise sur la figure emblématique de 
+        l''ennemi juré de Batman. Il brosse le portrait d''Arthur Fleck, un homme sans concession méprisé par la société. ',
+        162,'G','20th Century Fox');
+
+
 
 /*Insertions dans TP2_REALISATEUR : */
 insert into TP2_REALISATEUR (NOM_REA, PRENOM_REA)
@@ -216,6 +232,9 @@ insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
     
 insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
     values('HBO', 'HBO Go', 'http://www.hbo.com');
+    
+insert into TP2_PLATEFORME(NOM_PLATEFORME, COMPAGNIE_PLA, URL_PLA)
+    values('Amazon Prime', 'Amazon', 'http://www.primevideo.com');
 
 /*Insertions dans TP2_HORAIRE_PLATEFORNE : */    
 insert into TP2_HORAIRE_PLATEFORME(NOM_PLATEFORME, NO_OEUVRE, DATE_HEURE_HORP)
@@ -230,6 +249,9 @@ insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
     
 insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
     values('VRAK', 'Bell Media', 'http://www.vrak.tv');
+
+insert into TP2_CHAINE(NOM_CHAINE, COMPAGNIE_CHA, URL_CHA)
+    values('Série Plus', 'Corus Entertainment', 'http://www.serieplus.com');
 
 /*Insertions dans TP2_HORAIRE_CHAINE : */     
 insert into TP2_HORAIRE_CHAINE(NOM_CHAINE, NO_OEUVRE, DATE_HEURE_HORCH)
@@ -250,6 +272,9 @@ insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_
     
 insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
     values('Cineplex Laval', 'Cineplex', '2800 Ave du Cosmodôme', 'Laval', '(450)978-0212');
+
+insert into TP2_CINEMA(NOM_CINEMA, COMPAGNIE_CIN, ADR_CIN, VILLE_CIN, TELEPHONE_CIN)
+    values('Le Clap Place Ste-Foy', 'Le Clap', 'Derrière Place, 2580 Boulevard Laurier', 'Québec', '(450)653-2470');
 
 /*Insertions dans TP2_HORAIRE_CINEMA : */    
 insert into TP2_HORAIRE_CINEMA(NOM_CINEMA, NO_OEUVRE, DATE_DEBUT_HORC, HEURE_HORC, DATE_FIN_HORC)
@@ -274,6 +299,15 @@ insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MN
 insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
     values('Cineplex Laval', 'Adulte', 'Avant-midi', 11.99);
 
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Le Clap Place Ste-Foy', 'Adulte', 'Soir', 11.50);
+
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Le Clap Place Ste-Foy', 'Étudiant', 'Soir', 9.25);
+
+insert into TP2_BILLET_CINEMA(NOM_CINEMA, CATEGORIE_BIL, PERIODE_JOURNEE_BIL, MNT_PRIX_BIL)
+    values('Le Clap Place Ste-Foy', 'Enfant', 'Soir', 8.50);
+    
 /*Insertions dans TP2_ACTEUR : */
 insert into TP2_ACTEUR (NOM_ACT, PRENOM_ACT,DATE_NAISSANCE_ACT, COURRIEL_ACT)
     values ('DiCaprio','Leonardo',to_date('74-11-11','YY-MM-DD'), 'LeoDiCaprio74@gmail.com');
@@ -299,7 +333,16 @@ insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UT
     values ('BarbieDoll','Doll','Barbie','barbie@gmail.com',to_date('99-8-8','YY-MM-DD'),'jaimeKen','Membre');
 
 insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
+    values ('MonsieurNet','Net','Monsieur','effaceurmagique@yahoo.com',to_date('1958-8-24','YY-MM-DD'),'proprete101','Membre');
+
+insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
     values ('BobMod','Tremblay','Bob','bobmoderateur@quebingeton.com',to_date('90-03-03','YY-MM-DD'),'fG54pot*','Employé');  
+
+insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
+    values ('EllenEmp','Packet','Elle','ellen.employe@quebingeton.com',to_date('97-12-12','YY-MM-DD'),'vuowr23*','Employé');  
+
+insert into TP2_UTILISATEUR (LOGIN_UTILISATEUR, NOM_UTI, PRENOM_UTI, COURRIEL_UTI,DATE_NAISSANCE_UTI,MOT_DE_PASSE_UTI,TYPE_UTI)
+    values ('KarenEmp','Gagnon','Karen','karen.employe@quebingeton.com',to_date('70-12-24','YY-MM-DD'),'kaR32n23*','Employé'); 
     
 /*Insertions dans TP2_CRITIQUE : */
 insert into TP2_CRITIQUE(NO_CRITIQUE,NO_OEUVRE,SURNOM_MEMBRE,DATE_CRI,COTE_CRI,COMMENTAIRE_CRI) 
